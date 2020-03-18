@@ -53,8 +53,13 @@ void setup() {
 
     amp1.gain(0);
 
-    sgtl5000.enable();
-    sgtl5000.volume(0.5);
+    sgtl5000_1.enable();
+    sgtl5000_1.volume(0.5);
+
+    envelope1.attack(125);
+    envelope1.decay(125);
+    envelope1.sustain(125);
+    envelope1.release(125);
 
     waveform1.begin(WAVEFORM_SAWTOOTH);
     waveform1.amplitude(0.75);
@@ -129,7 +134,7 @@ void loop() {
     waveform1.frequency(FREQUENCY + 1.5);
     waveform2.frequency(FREQUENCY - 1.5);
     waveformMod1.frequency(FREQUENCY);
-    waveformMod1.frequencyModulation(note_sequence[step_number] / 500);
+    waveformMod1.frequencyModulation(note_sequence[step_number] / 100);
 
 
     while (waitingForStep()){
