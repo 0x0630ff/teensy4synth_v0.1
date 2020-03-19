@@ -1,2 +1,2 @@
 "READ ME for teensy synth." 
-"think i got it...."
+slowly building and testing stuff on the teensy 4.0 w/ audio shield.
