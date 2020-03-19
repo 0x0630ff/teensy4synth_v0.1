@@ -11,14 +11,14 @@
 #include "setup.h"
 #include "MIDIfunctions.h"
 
-const int blinkspeed = 125;
-int FREQUENCY = 60;
+const int blinkspeed = 500;
+int FREQUENCY = 54;
 int LEDSTATE = HIGH;
 float prevVol = 0.0;
 int stamp = 0;
 
 int step_number = 0;
-int note_sequence[] = {100, 100, 80, 80, 100, 60, 200, 210};
+int note_sequence[] = {54, 54, 65, 54, 108, 108, 65, 108};
 int note_length = 128;
 
 float BPM = 108;
@@ -37,7 +37,7 @@ int led = 13;
 void setup() {
     // set up midi via usb.
     // be sure to set type as MIDI in Arduino Tools -> Usb Type
-    usbMIDI.setHandleControlChange(MIDIContolChange);
+    // usbMIDI.setHandleControlChange(MIDIContolChange);
 
   // initialize the digital pin as an output.
     pinMode(15, INPUT);
@@ -47,19 +47,29 @@ void setup() {
 
     Serial.begin(115200);
 
-    mixer1.gain(0,0.7);
-    mixer1.gain(1,0.65);
-    mixer1.gain(2,1);
-
-    amp1.gain(0);
-
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
 
-    envelope1.attack(125);
-    envelope1.decay(125);
-    envelope1.sustain(125);
-    envelope1.release(125);
+    mixer1.gain(0,0.6);
+    mixer1.gain(1,0.65);
+    mixer1.gain(2,0.7);
+    mixer1.gain(3,0.7);
+
+    mixer2.gain(0,0.25);
+    mixer2.gain(1,1);
+
+    // amp1.gain(10);
+
+    LFO.frequency(0.1);
+    LFO.amplitude(1);
+
+    filter1.frequency(100);
+    filter1.resonance(0.75);
+
+    envelope1.attack(0);
+    envelope1.decay(0.5);
+    envelope1.sustain(50);
+    envelope1.release(0.125);
 
     waveform1.begin(WAVEFORM_SAWTOOTH);
     waveform1.amplitude(0.75);
@@ -74,6 +84,11 @@ void setup() {
     waveformMod1.amplitude(0.75);
     waveformMod1.frequency(FREQUENCY);
     waveformMod1.frequencyModulation(0.25);
+
+    waveformMod2.begin(WAVEFORM_SAWTOOTH);
+    waveformMod2.amplitude(0.75);
+    waveformMod2.frequency(FREQUENCY - 1.25);
+    waveformMod2.frequencyModulation(0.25);
 }
 
 ////////////////////////////////////////////// Functions ############################################################
@@ -83,10 +98,11 @@ void adjust_volume(void){
     double vol = AR / 1000;
 
     if (vol != prevVol) {
-        Serial.print(" vol ");
+        Serial.print(" Vol ");
         Serial.println(vol);
-        Serial.println("Set");
-        amp1.gain(vol);
+        // Serial.println("Set");
+        // amp1.gain(vol);
+        sgtl5000_1.volume(vol);
         prevVol = vol;
     }
 }
@@ -131,19 +147,27 @@ void loop() {
     usbMIDI.read();
     
     FREQUENCY = note_sequence[step_number];
+
+    Serial.print("Freq: ");
+    Serial.println(FREQUENCY);
+    
     waveform1.frequency(FREQUENCY + 1.5);
     waveform2.frequency(FREQUENCY - 1.5);
     waveformMod1.frequency(FREQUENCY);
     waveformMod1.frequencyModulation(note_sequence[step_number] / 100);
-
-
+    waveformMod2.frequency(FREQUENCY);
+    waveformMod2.frequencyModulation(note_sequence[step_number] / 100);
+    
+    envelope1.noteOn();
+    envelope1.noteOff();
+    
     while (waitingForStep()){
         // do stuff that might need constant updating.
         // Serial.println(waitingForStep());
     }
 
-    adjust_volume();
-    blinkLed();
-    take_step();
+    adjust_volume();  // track fader to adjust volume... 
+    blinkLed();  // blink LED to show activity
+    take_step();  // step through note_sequence
     
 }
