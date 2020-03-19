@@ -39,9 +39,13 @@ void setup() {
     // be sure to set type as MIDI in Arduino Tools -> Usb Type
     // usbMIDI.setHandleControlChange(MIDIContolChange);
 
-  // initialize the digital pin as an output.
-    pinMode(15, INPUT);
+    // initialize the I/O.
+    pinMode(15, INPUT);  // volume controller.
+    pinMode(13, INPUT);
+    pinMode(14, OUTPUT);
     pinMode(led, OUTPUT);
+
+    digitalWrite(14, HIGH);
 
     AudioMemory(20);
 
@@ -138,6 +142,11 @@ bool waitingForStep(void){
     }
 }
 
+float stickValue(void){
+    int X = analogRead(14);
+    Serial.print("X: ");
+    Serial.println(X);
+}
 ////////////////////////////////////////////// Main Loop ############################################################
 
 // the loop routine runs over and over again forever:
@@ -166,6 +175,7 @@ void loop() {
         // Serial.println(waitingForStep());
     }
 
+    // stickValue();
     adjust_volume();  // track fader to adjust volume... 
     blinkLed();  // blink LED to show activity
     take_step();  // step through note_sequence
