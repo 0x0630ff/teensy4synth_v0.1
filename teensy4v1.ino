@@ -83,9 +83,9 @@ void adjust_volume(void){
     double vol = AR / 1000;
 
     if (vol != prevVol) {
-        Serial.print(" vol ");
+        Serial.print("Vol: ");
         Serial.println(vol);
-        Serial.println("Set");
+        // Serial.println("Set");
         amp1.gain(vol);
         prevVol = vol;
     }
@@ -103,8 +103,8 @@ void blinkLed(void){
 void take_step(void){
     Serial.print("Step number ");
     Serial.println(step_number);
-    Serial.print("Size of Note sequence ");
-    Serial.println(sizeof(note_sequence)/(sizeof(int)));
+    // Serial.print("Size of Note sequence ");
+    // Serial.println(sizeof(note_sequence)/(sizeof(int)));
     if (step_number == sizeof(note_sequence)/(sizeof(int))){
         step_number = 0;
     } else {
@@ -128,6 +128,8 @@ bool waitingForStep(void){
 void loop() {
     stamp = millis();
 
+    Serial.println("%~ START ~%");
+    
     usbMIDI.read();
     
     FREQUENCY = note_sequence[step_number];
@@ -140,10 +142,13 @@ void loop() {
     while (waitingForStep()){
         // do stuff that might need constant updating.
         // Serial.println(waitingForStep());
+            
+        adjust_volume();
+        blinkLed();
+        
     }
-
-    adjust_volume();
-    blinkLed();
-    take_step();
     
+    take_step();
+
+    Serial.println("%~ END ~%");
 }
