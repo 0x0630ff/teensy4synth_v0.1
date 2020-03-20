@@ -81,15 +81,15 @@ void setup() {
     waveform2.amplitude(0.75);
     waveform2.frequency(FREQUENCY - 1.5);
 
-    sine_fm1.begin(WAVEFORM_SAWTOOTH);
+    // sine_fm1.begin(WAVEFORM_SAWTOOTH);
     sine_fm1.amplitude(0.75);
     sine_fm1.frequency(FREQUENCY);
-    sine_fm1.frequencyModulation(0.25);
+    // sine_fm1.frequencyModulation(0.25);
 
-    sine_fm2.begin(WAVEFORM_SAWTOOTH);
+    // sine_fm2.begin(WAVEFORM_SAWTOOTH);
     sine_fm2.amplitude(0.75);
     sine_fm2.frequency(FREQUENCY - 1.25);
-    sine_fm2.frequencyModulation(0.25);
+    // sine_fm2.frequencyModulation(0.25);
 }
 
 ////////////////////////////////////////////// Functions ############################################################
@@ -161,12 +161,12 @@ void loop() {
     waveform1.frequency(FREQUENCY + 1.5);
     waveform2.frequency(FREQUENCY - 1.5);
     sine_fm1.frequency(FREQUENCY);
-    sine_fm1.frequencyModulation(note_sequence[step_number] / 100);
+    // sine_fm1.frequencyModulation(note_sequence[step_number] / 100);
     sine_fm2.frequency(FREQUENCY);
-    sine_fm2.frequencyModulation(note_sequence[step_number] / 100);
+    // sine_fm2.frequencyModulation(note_sequence[step_number] / 100);
     
-    envelope1.noteOn();
-    envelope1.noteOff();
+    // envelope1.noteOn();
+    // envelope1.noteOff();
     
     while (waitingForStep()){
         // do stuff that might need constant updating.
