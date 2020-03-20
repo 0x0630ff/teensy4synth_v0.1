@@ -1,5 +1,6 @@
 /*
     Teensy Synth testing sketch...
+    'teensy4v1.1'
 */
 #include <Audio.h>
 #include <Wire.h>
@@ -8,8 +9,8 @@
 #include <SerialFlash.h>
 #include <MIDI.h>
 
-#include "setup.h"
-#include "MIDIfunctions.h"
+#include "setup.h"  // where the audio design export is pasted.
+#include "MIDIfunctions.h"  // does stuff for midi.. might import a library later..
 
 const int blinkspeed = 500;
 int FREQUENCY = 54;
@@ -41,11 +42,7 @@ void setup() {
 
     // initialize the I/O.
     pinMode(15, INPUT);  // volume controller.
-    pinMode(13, INPUT);
-    pinMode(14, OUTPUT);
     pinMode(led, OUTPUT);
-
-    digitalWrite(14, HIGH);
 
     AudioMemory(20);
 
@@ -54,13 +51,13 @@ void setup() {
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
 
-    mixer1.gain(0,0.6);
-    mixer1.gain(1,0.65);
-    mixer1.gain(2,0.7);
-    mixer1.gain(3,0.7);
+    mixer1.gain(0, 0.6);
+    mixer1.gain(1, 0.6);
+    mixer1.gain(2, 0.7);
+    mixer1.gain(3, 0.7);
 
-    mixer2.gain(0,0.25);
-    mixer2.gain(1,1);
+    mixer2.gain(0, 0.7);
+    mixer2.gain(1, 0.8);
 
     // amp1.gain(10);
 
@@ -68,12 +65,12 @@ void setup() {
     LFO.amplitude(1);
 
     filter1.frequency(100);
-    filter1.resonance(0.75);
+    filter1.resonance(0.7);
 
-    envelope1.attack(0);
-    envelope1.decay(0.5);
-    envelope1.sustain(50);
-    envelope1.release(0.125);
+    // envelope1.attack(0);
+    // envelope1.decay(0.5);
+    // envelope1.sustain(50);
+    // envelope1.release(0.125);
 
     waveform1.begin(WAVEFORM_SAWTOOTH);
     waveform1.amplitude(0.75);
@@ -84,15 +81,15 @@ void setup() {
     waveform2.amplitude(0.75);
     waveform2.frequency(FREQUENCY - 1.5);
 
-    waveformMod1.begin(WAVEFORM_SAWTOOTH);
-    waveformMod1.amplitude(0.75);
-    waveformMod1.frequency(FREQUENCY);
-    waveformMod1.frequencyModulation(0.25);
+    sine_fm1.begin(WAVEFORM_SAWTOOTH);
+    sine_fm1.amplitude(0.75);
+    sine_fm1.frequency(FREQUENCY);
+    sine_fm1.frequencyModulation(0.25);
 
-    waveformMod2.begin(WAVEFORM_SAWTOOTH);
-    waveformMod2.amplitude(0.75);
-    waveformMod2.frequency(FREQUENCY - 1.25);
-    waveformMod2.frequencyModulation(0.25);
+    sine_fm2.begin(WAVEFORM_SAWTOOTH);
+    sine_fm2.amplitude(0.75);
+    sine_fm2.frequency(FREQUENCY - 1.25);
+    sine_fm2.frequencyModulation(0.25);
 }
 
 ////////////////////////////////////////////// Functions ############################################################
@@ -142,11 +139,12 @@ bool waitingForStep(void){
     }
 }
 
-float stickValue(void){
-    int X = analogRead(14);
-    Serial.print("X: ");
-    Serial.println(X);
-}
+// float stickValue(void){
+//     int X = analogRead(14);
+//     Serial.print("X: ");
+//     Serial.println(X);
+// }
+
 ////////////////////////////////////////////// Main Loop ############################################################
 
 // the loop routine runs over and over again forever:
@@ -162,10 +160,10 @@ void loop() {
     
     waveform1.frequency(FREQUENCY + 1.5);
     waveform2.frequency(FREQUENCY - 1.5);
-    waveformMod1.frequency(FREQUENCY);
-    waveformMod1.frequencyModulation(note_sequence[step_number] / 100);
-    waveformMod2.frequency(FREQUENCY);
-    waveformMod2.frequencyModulation(note_sequence[step_number] / 100);
+    sine_fm1.frequency(FREQUENCY);
+    sine_fm1.frequencyModulation(note_sequence[step_number] / 100);
+    sine_fm2.frequency(FREQUENCY);
+    sine_fm2.frequencyModulation(note_sequence[step_number] / 100);
     
     envelope1.noteOn();
     envelope1.noteOff();
