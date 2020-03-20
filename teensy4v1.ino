@@ -11,10 +11,11 @@
 
 #include "setup.h"  // where the audio design export is pasted.
 #include "MIDIfunctions.h"  // does stuff for midi.. might import a library later..
-// #include "mixers.h"
-// #include "amps.h"
-// #include "oscs.h"
-// #include "filters.h"
+
+#include "mixers.h"
+#include "amps.h"
+#include "oscs.h"
+#include "filters.h"
 
 const int blinkspeed = 500;
 int FREQUENCY = 54;
@@ -132,4 +133,5 @@ void loop() {
     adjust_volume();  // track fader to adjust volume... 
     blinkLed();  // blink LED to show activity
     take_step();  // step through note_sequence
+    nadafunc();
 }
