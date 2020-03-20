@@ -7,10 +7,14 @@
 #include <SPI.h>
 #include <SD.h>
 #include <SerialFlash.h>
-#include <MIDI.h>
+// #include <MIDI.h>
 
 #include "setup.h"  // where the audio design export is pasted.
 #include "MIDIfunctions.h"  // does stuff for midi.. might import a library later..
+// #include "mixers.h"
+// #include "amps.h"
+// #include "oscs.h"
+// #include "filters.h"
 
 const int blinkspeed = 500;
 int FREQUENCY = 54;
@@ -36,60 +40,17 @@ int led = 13;
 
 // the setup routine runs once when you press reset:
 void setup() {
-    // set up midi via usb.
     // be sure to set type as MIDI in Arduino Tools -> Usb Type
-    // usbMIDI.setHandleControlChange(MIDIContolChange);
+    MIDIsetup();
 
     // initialize the I/O.
     pinMode(15, INPUT);  // volume controller.
     pinMode(led, OUTPUT);
 
     AudioMemory(20);
-
     Serial.begin(115200);
-
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
-
-    mixer1.gain(0, 0.6);
-    mixer1.gain(1, 0.6);
-    mixer1.gain(2, 0.7);
-    mixer1.gain(3, 0.7);
-
-    mixer2.gain(0, 0.7);
-    mixer2.gain(1, 0.8);
-
-    // amp1.gain(10);
-
-    LFO.frequency(0.1);
-    LFO.amplitude(1);
-
-    filter1.frequency(100);
-    filter1.resonance(0.7);
-
-    // envelope1.attack(0);
-    // envelope1.decay(0.5);
-    // envelope1.sustain(50);
-    // envelope1.release(0.125);
-
-    waveform1.begin(WAVEFORM_SAWTOOTH);
-    waveform1.amplitude(0.75);
-    waveform1.frequency(FREQUENCY + 1.5);
-    waveform1.pulseWidth(0.15);
-
-    waveform2.begin(WAVEFORM_SINE);
-    waveform2.amplitude(0.75);
-    waveform2.frequency(FREQUENCY - 1.5);
-
-    // sine_fm1.begin(WAVEFORM_SAWTOOTH);
-    sine_fm1.amplitude(0.75);
-    sine_fm1.frequency(FREQUENCY);
-    // sine_fm1.frequencyModulation(0.25);
-
-    // sine_fm2.begin(WAVEFORM_SAWTOOTH);
-    sine_fm2.amplitude(0.75);
-    sine_fm2.frequency(FREQUENCY - 1.25);
-    // sine_fm2.frequencyModulation(0.25);
 }
 
 ////////////////////////////////////////////// Functions ############################################################
@@ -99,18 +60,9 @@ void adjust_volume(void){
     double vol = AR / 1000;
 
     if (vol != prevVol) {
-<<<<<<< HEAD
-        Serial.print("Vol: ");
-        Serial.println(vol);
-        // Serial.println("Set");
-        amp1.gain(vol);
-=======
         Serial.print(" Vol ");
         Serial.println(vol);
-        // Serial.println("Set");
-        // amp1.gain(vol);
         sgtl5000_1.volume(vol);
->>>>>>> 009cda902b23d1322bf2858ed11680022dfe02a0
         prevVol = vol;
     }
 }
@@ -146,7 +98,7 @@ bool waitingForStep(void){
     }
 }
 
-// float stickValue(void){
+// float stickMod(void){
 //     int X = analogRead(14);
 //     Serial.print("X: ");
 //     Serial.println(X);
@@ -170,31 +122,14 @@ void loop() {
     waveform1.frequency(FREQUENCY + 1.5);
     waveform2.frequency(FREQUENCY - 1.5);
     sine_fm1.frequency(FREQUENCY);
-    // sine_fm1.frequencyModulation(note_sequence[step_number] / 100);
     sine_fm2.frequency(FREQUENCY);
-    // sine_fm2.frequencyModulation(note_sequence[step_number] / 100);
-    
-    // envelope1.noteOn();
-    // envelope1.noteOff();
     
     while (waitingForStep()){
         // do stuff that might need constant updating.
-        // Serial.println(waitingForStep());
-            
-        adjust_volume();
-        blinkLed();
-        
     }
-<<<<<<< HEAD
-=======
 
-    // stickValue();
+    // stickMod();
     adjust_volume();  // track fader to adjust volume... 
     blinkLed();  // blink LED to show activity
     take_step();  // step through note_sequence
->>>>>>> 009cda902b23d1322bf2858ed11680022dfe02a0
-    
-    take_step();
-
-    Serial.println("%~ END ~%");
 }
