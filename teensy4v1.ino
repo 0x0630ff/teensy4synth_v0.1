@@ -79,8 +79,8 @@ void blinkLed(void){
 void take_step(void){
     Serial.print("Step number ");
     Serial.println(step_number);
-    Serial.print("Size of Note sequence ");
-    Serial.println(sizeof(note_sequence)/(sizeof(int)));
+    // Serial.print("Size of Note sequence ");
+    // Serial.println(sizeof(note_sequence)/(sizeof(int)));
     if (step_number == sizeof(note_sequence)/(sizeof(int))){
         step_number = 0;
     } else {
@@ -110,6 +110,8 @@ bool waitingForStep(void){
 void loop() {
     stamp = millis();
 
+    Serial.println("%~ START ~%");
+    
     usbMIDI.read();
     
     FREQUENCY = note_sequence[step_number];
