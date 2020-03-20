@@ -1,5 +1,7 @@
 // v1.1
 
+#include "Arduino.h"
+
 #include <Audio.h>
 #include <Wire.h>
 #include <SPI.h>
@@ -7,23 +9,23 @@
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioSynthWaveformSine   LFO;          //xy=76,276
+AudioSynthWaveform       LFO1;          //xy=116,243
+AudioSynthWaveform       LFO2;          //xy=549,235
 AudioSynthWaveform       waveform2;      //xy=124,163
 AudioSynthWaveform       waveform1;      //xy=126,99
-AudioSynthWaveformPWM    pwm1;           //xy=197,254
-AudioSynthWaveformPWM    pwm2;           //xy=198,300
+AudioSynthWaveformPWM    pwm1;           //xy=244,227
+AudioSynthWaveformPWM    pwm2;           //xy=244,260
 AudioSynthWaveformSineModulated sine_fm1;       //xy=254,131
 AudioSynthWaveformSineModulated sine_fm2;       //xy=255,188
 AudioMixer4              mixer1;         //xy=420,141
 AudioMixer4              mixer2;         //xy=421,217
-AudioSynthWaveformSine   LFO2; //xy=549,235
 AudioMixer4              mixer3;         //xy=551,173
+AudioMixer4              mixer4;         //xy=806,193
 AudioFilterStateVariable filter1;        //xy=674,203
-AudioMixer4              mixer4;         //xy=808,191
-AudioAmplifier           amp1;           //xy=939,194
-AudioOutputI2S           i2s2;           //xy=1073,192
-AudioConnection          patchCord1(LFO, pwm1);
-AudioConnection          patchCord2(LFO, pwm2);
+AudioAmplifier           amp1;           //xy=936,193
+AudioOutputI2S           i2s2;           //xy=1073,194
+AudioConnection          patchCord1(LFO1, pwm1);
+AudioConnection          patchCord2(LFO1, pwm2);
 AudioConnection          patchCord3(waveform2, sine_fm2);
 AudioConnection          patchCord4(waveform2, 0, mixer1, 2);
 AudioConnection          patchCord5(waveform1, sine_fm1);
