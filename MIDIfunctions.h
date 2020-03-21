@@ -3,14 +3,10 @@
 const byte BUFFER = 8;  // size of keyboard buffer
 const float DIV127 = (1.0 / 127.0);
 
-<<<<<<< HEAD
-void MIDIContolChange(byte channel, byte control, byte value){
-=======
 int globalNote;
 int globalVelocity;
 
 void MIDIContolChange(byte channel, byte control, byte value) {
->>>>>>> 90c1afa5e24dec46096b023efed684ce33c2b5ed
     // Midi Switch
     switch (control)
     {

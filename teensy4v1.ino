@@ -1,10 +1,6 @@
 /*
     Teensy Synth testing sketch...
-<<<<<<< HEAD
     v1.1
-=======
-    'teensy4v1.1'
->>>>>>> 90c1afa5e24dec46096b023efed684ce33c2b5ed
 */
 #include <Audio.h>
 #include <Wire.h>
@@ -70,14 +66,9 @@ void adjust_volume(void) {
     double vol = AR / 1000;
 
     if (vol != prevVol) {
-<<<<<<< HEAD
         Serial.print("Vol: ");
         Serial.println(vol);
         // amp1.gain(vol);
-=======
-        Serial.print(" Vol ");
-        Serial.println(vol);
->>>>>>> 90c1afa5e24dec46096b023efed684ce33c2b5ed
         sgtl5000_1.volume(vol);
         prevVol = vol;
     }
