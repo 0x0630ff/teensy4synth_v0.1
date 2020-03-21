@@ -3,7 +3,7 @@
 const byte BUFFER = 8;  // size of keyboard buffer
 const float DIV127 = (1.0 / 127.0);
 
-void MIDIContolChange(byte channel, byte control, byte value){
+void MIDIContolChange(byte channel, byte control, byte value) {
     // Midi Switch
     switch (control)
     {
@@ -20,22 +20,22 @@ void MIDIContolChange(byte channel, byte control, byte value){
     }
 }   
 
-void keyBuff(byte note, bool playNote){
+void keyBuff(byte note, bool playNote) {
     static byte buff[BUFFER];
     static byte buffSize = 0;
     // Add note
 }
 
-void midiNoteOn(byte channel, byte note, byte velocity){
+void midiNoteOn(byte channel, byte note, byte velocity) {
     // do something with the note, channel, velocity etc...
     keyBuff(note, true);
 }
 
-void midiNoteOff(byte channel, byte note, byte velocity){
+void midiNoteOff(byte channel, byte note, byte velocity) {
     keyBuff(note, false);
 }
 
-void MIDIsetup(void){
+void MIDIsetup(void) {
     // set up midi via usb. call in setup();
     usbMIDI.setHandleControlChange(MIDIContolChange);
 }

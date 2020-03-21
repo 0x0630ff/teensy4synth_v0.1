@@ -61,7 +61,7 @@ void setup() {
 
 ////////////////////////////////////////////// Functions ############################################################
 
-void adjust_volume(void){
+void adjust_volume(void) {
     float AR = analogRead(15);
     double vol = AR / 1000;
 
@@ -73,7 +73,7 @@ void adjust_volume(void){
     }
 }
 
-void blinkLed(void){
+void blinkLed(void) {
     float now = millis();
     if ((now - ledBlinkTimer) > blinkDelay){
         LEDSTATE = !LEDSTATE;
@@ -82,7 +82,7 @@ void blinkLed(void){
     }
 }
 
-void take_step(void){
+void take_step(void) {
     Serial.print("Step number ");
     Serial.println(step_number);
     if (step_number == sizeof(note_sequence)/(sizeof(int))){
@@ -92,7 +92,7 @@ void take_step(void){
     }
 }
 
-bool waitingForStep(void){
+bool waitingForStep(void) {
     float now = millis();
     if ((now - stamp) > note_length){
         return false;
@@ -128,7 +128,7 @@ void loop() {
     sine_fm1.frequency(FREQUENCY);
     sine_fm2.frequency(FREQUENCY);
     
-    while (waitingForStep()){
+    while (waitingForStep()) {
         // do stuff that might need constant updating.
     }
 
