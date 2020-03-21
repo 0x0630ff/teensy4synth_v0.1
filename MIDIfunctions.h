@@ -4,7 +4,6 @@ const byte BUFFER = 8;  // size of keyboard buffer
 const float DIV127 = (1.0 / 127.0);
 
 void MIDIContolChange(byte channel, byte control, byte value){
-    
     // Midi Switch
     switch (control)
     {
