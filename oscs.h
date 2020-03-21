@@ -32,7 +32,7 @@ void oscSetup(float FREQUENCY) {
     // LFO 
     // main lfo connected to the pwm oscilators.
     // LFO1.frequency(0.1);
-    // LFO1.amplitude(1);
+    LFO1.amplitude(0.0);
 
     // LFO2
     // lfo for the filter movement.

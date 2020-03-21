@@ -2,11 +2,11 @@
     Teensy Synth testing sketch...
     v1.1
 */
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
+// #include <Audio.h>
+// #include <Wire.h>
+// #include <SPI.h>
+// #include <SD.h>
+// #include <SerialFlash.h>
 // #include <MIDI.h>
 
 #include "setup.h"  // where the audio design export is pasted.
@@ -20,7 +20,6 @@
 const int blinkspeed = 500;
 int FREQUENCY = 54;
 int LEDSTATE = HIGH;
-float prevVol = 0.0;
 int stamp = 0;
 
 int step_number = 0;
@@ -60,19 +59,6 @@ void setup() {
 }
 
 ////////////////////////////////////////////// Functions ############################################################
-
-void adjust_volume(void) {
-    float AR = analogRead(15);
-    double vol = AR / 1000;
-
-    if (vol != prevVol) {
-        Serial.print("Vol: ");
-        Serial.println(vol);
-        // amp1.gain(vol);
-        sgtl5000_1.volume(vol);
-        prevVol = vol;
-    }
-}
 
 void blinkLed(void) {
     float now = millis();
@@ -134,7 +120,8 @@ void loop() {
     }
 
     // stickMod();
-    adjust_volume();  // track fader to adjust volume... 
+    // adjust_volume();  // track fader to adjust volume... 
+    sweepFilter();  // sweep teh filter
     blinkLed();  // blink LED to show activity
     take_step();  // step through note_sequence
     nadafunc();

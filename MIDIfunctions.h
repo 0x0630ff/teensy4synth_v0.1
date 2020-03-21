@@ -1,3 +1,6 @@
+#ifndef __MIDI_FUNC__
+#define __MIDI_FUNC__
+
 #include "Arduino.h"
 
 const byte BUFFER = 8;  // size of keyboard buffer
@@ -66,3 +69,5 @@ void MIDIsetup(void) {
     // MIDI.setHandleNoteOn(midiNoteOn);
     // MIDI.setHandleNoteOff(midiNoteOff);
 }
+
+#endif
