@@ -3,7 +3,7 @@
 #include "Arduino.h"
 // #include "setup.h"
 
-void oscSetup(void) {
+void oscSetup(float FREQUENCY) {
     // waveform1
     waveform1.begin(WAVEFORM_SAWTOOTH);
     waveform1.amplitude(0.75);

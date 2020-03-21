@@ -43,6 +43,10 @@ int led = 13;
 void setup() {
     // be sure to set type as MIDI in Arduino Tools -> Usb Type
     MIDIsetup();
+    oscSetup(FREQUENCY);
+    filterSetup();
+    mixerSetup();
+    ampSetup();
 
     // initialize the I/O.
     pinMode(15, INPUT);  // volume controller.
@@ -52,6 +56,7 @@ void setup() {
     Serial.begin(115200);
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
+
 }
 
 ////////////////////////////////////////////// Functions ############################################################
@@ -80,8 +85,6 @@ void blinkLed(void){
 void take_step(void){
     Serial.print("Step number ");
     Serial.println(step_number);
-    // Serial.print("Size of Note sequence ");
-    // Serial.println(sizeof(note_sequence)/(sizeof(int)));
     if (step_number == sizeof(note_sequence)/(sizeof(int))){
         step_number = 0;
     } else {
